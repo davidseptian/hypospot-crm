@@ -348,7 +348,8 @@ function renderTable() {
     const overdue = c.jadwal_fu && c.jadwal_fu < today && c.prioritas_fu !== 'Sudah FU';
     const waNum = (c.wa||'').replace(/^0/,'62').replace(/\D/g,'');
     const waLink = c.wa ? `<a href="https://wa.me/${waNum}" target="_blank" style="color:var(--gold);text-decoration:none;font-weight:500">${esc(c.wa)}</a>` : '—';
-    const val = c.est_value && c.est_value!=='0' ? 'Rp '+Number(c.est_value).toLocaleString('id-ID') : '—';
+    const _num = parseFloat(String(c.est_value).replace(/[^0-9.]/g,''));
+    const val = (!isNaN(_num) && _num > 0) ? 'Rp '+_num.toLocaleString('id-ID') : '—';
     const note = c.catatan ? `<span title="${esc(c.catatan)}" style="cursor:help">${esc(c.catatan.substring(0,32))}${c.catatan.length>32?'…':''}</span>` : '—';
     const crossDisp = c.cross && c.cross!=='—' ? `<span style="color:var(--cross-txt);font-size:12px">${esc(c.cross)}</span>` : '<span style="color:#ccc">—</span>';
     return `<tr class="${overdue?'overdue':''}">
